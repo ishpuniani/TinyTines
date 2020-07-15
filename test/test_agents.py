@@ -4,6 +4,7 @@ from src.agents.models import AgentFactory
 
 
 class TestAgents(unittest.TestCase):
+    # Testing the create_agent method of AgentFactory
     def test_HTTPRequestAgent_creation(self):
         agent_dict = json.loads('{"type":"HTTPRequestAgent","name":"sunset","options":{'
                                 '"url":"https:\/\/api.sunrise-sunset.org\/json?lat={{test_data.latitude}}&lng={{'

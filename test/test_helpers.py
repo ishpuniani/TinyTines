@@ -1,13 +1,13 @@
 import json
 import unittest
 from unittest import mock
-
 from requests import HTTPError
-
 from src.agents.helper import Helper
 
 
 class TestHelpers(unittest.TestCase):
+    # This test suite tests various cases of the helper functions in src.agents.helper
+
     test_dict = json.loads(
         '{"location":{"ip":"31.205.216.21","success":true,"type":"IPv4","continent":"Europe","continent_code":"EU",'
         '"country":"United Kingdom","country_code":"GB","country_flag":"https:\/\/cdn.ipwhois.io\/flags\/gb.svg",'
@@ -35,6 +35,7 @@ class TestHelpers(unittest.TestCase):
 
         return MockResponse(None, 404)
 
+    # Testing the get_request method
     @mock.patch('requests.get', side_effect=mocked_requests_get)
     def test_get_request_ok(self, mock_get):
         url = "http://someurl.com/success"
@@ -49,6 +50,7 @@ class TestHelpers(unittest.TestCase):
         # correct_resp = json.loads('{"key2": "value2"}')
         self.assertRaises(HTTPError, Helper.get_request, url)
 
+    # Testing the get_by_complex_key method
     def test_json_parse_key_present(self):
         key = "location.latitude"
         val = Helper.get_by_complex_key(self.test_dict, key)
@@ -59,6 +61,7 @@ class TestHelpers(unittest.TestCase):
         val = Helper.get_by_complex_key(self.test_dict, key)
         self.assertEqual(val, "")
 
+    # Testing the interpolate_values method
     def test_interpolate_string_nested(self):
         string = "https://api.sunrise-sunset.org/json?lat={{location.latitude}}&lng={{location.longitude}}"
         correct_val = "https://api.sunrise-sunset.org/json?lat=53.381129&lng=-1.470085"

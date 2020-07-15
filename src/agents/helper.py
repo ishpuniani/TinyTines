@@ -6,6 +6,12 @@ from requests import HTTPError
 class Helper:
     @classmethod
     def get_by_complex_key(cls, json_dict, key):
+        """
+        This method loops into the dict and gets the value of the complex key
+        :param json_dict: dictionary to be iterated over.
+        :param key: complex key which needs to be found in the dict.
+        :return:
+        """
         key_arr = key.strip().split('.')
         value = ""
         d = json_dict.copy()
@@ -20,6 +26,12 @@ class Helper:
 
     @classmethod
     def interpolate_values(cls, string, json_dict):
+        """
+        Interpolates the values in the string by replacing {{keys.key}} with the appropriate value from the dict.
+        :param string: String where interpolation has to be performed.
+        :param json_dict: Json response received from which the values have to be parsed from.
+        :return: string with interpolated values.
+        """
         str_cpy = string
         try:
             pattern = re.compile(r"{{[a-z|.|_]*}}")
@@ -36,13 +48,19 @@ class Helper:
 
     @classmethod
     def get_request(cls, url):
+        """
+        Runs a get request with retry mechanism on the url.
+        :param url: URL to be hit for response.
+        :return: response in the form of a dict.
+        :raises HTTPError if get request fails to return the response ok code(under 400).
+        """
         # print("Getting url:: " + url)
         retry_count = 0
         data = {}
         while True:
             try:
                 response = requests.get(url)
-                if response.status_code != 200:
+                if not response.ok:
                     raise HTTPError('Get Request failed')
                 data = response.json()
                 break
