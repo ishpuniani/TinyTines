@@ -8,7 +8,7 @@ if __name__ == '__main__':
 
     story_file_path = args.story_file_path
     # story_file_path = '../resources/tiny-tines-sunset.json'
-    print("Story File Path::" + story_file_path)
+    # print("Story File Path::" + story_file_path)
 
     story = Story(story_file_path)
     story.run()
