@@ -53,6 +53,6 @@ class Helper:
                 else:
                     print("Unable to get url: " + url)
                     print(e)
-                    raise Exception(e)
+                    raise e
         # print("request output:: " + str(data))
         return data

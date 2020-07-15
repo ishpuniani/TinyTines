@@ -1,5 +1,5 @@
 from abc import abstractmethod
-from agents.helper import Helper
+from .helper import Helper
 
 
 class AgentFactory:
